@@ -23,9 +23,6 @@ public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee> i
 
     /**
      * 用户登录
-     *
-     * @param employee
-     * @return
      */
     @Override
     public R<Employee> login(Employee employee) {
@@ -55,10 +52,6 @@ public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee> i
 
     /**
      * 新增用户
-     *
-     * @param employee
-     * @param id
-     * @return
      */
     @Override
     public R<String> save(Employee employee, Long id) {
@@ -71,6 +64,7 @@ public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee> i
         }
         // 设置默认密码
         employee.setPassword(DigestUtils.md5DigestAsHex("123456".getBytes()));
+        // 使用公共字段自动填充
         // 设置创建时间
         employee.setCreateTime(LocalDateTime.now());
         // 设置更新时间
@@ -79,6 +73,7 @@ public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee> i
         employee.setCreateUser(id);
         // 设置更新人
         employee.setUpdateUser(id);
+
         employeeMapper.insert(employee);
         return R.success("添加成功");
     }
@@ -95,7 +90,6 @@ public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee> i
      * @param currentPage 当前页
      * @param pageSize    页面大小
      * @param name        员工姓名
-     * @return
      */
     @Override
     public R<Page<Employee>> getPage(int currentPage, int pageSize, String name) {
