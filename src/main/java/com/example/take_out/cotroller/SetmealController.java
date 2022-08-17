@@ -22,12 +22,11 @@ public class SetmealController {
     private ISetmealDishService setmealDishService;
 
     @GetMapping("/page")
-    public R<Page<Setmeal>> page(@RequestParam("page") int currentPage,
+    public R<Page<SetmealDto>> page(@RequestParam("page") int currentPage,
                                  @RequestParam("pageSize") int pageSize,
                                  String name) {
         log.info("当前页：{}，页面大小：{}，套餐名称：{}", currentPage, pageSize, name);
         return setmealService.getPage(currentPage, pageSize, name);
-
     }
 
     @PostMapping

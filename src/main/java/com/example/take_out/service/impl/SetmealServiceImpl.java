@@ -5,7 +5,6 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.take_out.cotroller.utils.R;
 import com.example.take_out.dto.SetmealDto;
-import com.example.take_out.entity.Dish;
 import com.example.take_out.entity.Setmeal;
 import com.example.take_out.entity.SetmealDish;
 import com.example.take_out.service.ISetmealDishService;
@@ -15,8 +14,6 @@ import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -31,13 +28,18 @@ public class SetmealServiceImpl extends ServiceImpl<SetmealMapper, Setmeal>
         implements ISetmealService {
 
     @Autowired
+    private SetmealMapper setmealMapper;
+
+    @Autowired
     private ISetmealDishService setmealDishService;
 
-    public R<Page<Setmeal>> getPage(int currentPage, int pageSize, String name) {
-        Page<Setmeal> page = new Page<>(currentPage, pageSize);
-        LambdaQueryWrapper<Setmeal> lqw = new LambdaQueryWrapper<>();
+    @Override
+    public R<Page<SetmealDto>> getPage(int currentPage, int pageSize, String name) {
+        Page<SetmealDto> page = new Page<>(currentPage, pageSize);
+        LambdaQueryWrapper<SetmealDto> lqw = new LambdaQueryWrapper<>();
         lqw.like(Strings.isNotEmpty(name), Setmeal::getName, name);
-        this.page(page, lqw);
+        lqw.apply("setmeal.category_id = category.id");
+        setmealMapper.getPage(page, lqw);
         return R.success(page);
     }
 

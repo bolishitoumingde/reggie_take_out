@@ -13,7 +13,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface ISetmealService extends IService<Setmeal> {
 
-    R<Page<Setmeal>> getPage(int currentPage, int pageSize, String name);
+    R<Page<SetmealDto>> getPage(int currentPage, int pageSize, String name);
 
     R<String> addSetmeal(SetmealDto setmealDto);
 
