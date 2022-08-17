@@ -22,7 +22,12 @@ public class GlobalException {
     @ExceptionHandler(SQLIntegrityConstraintViolationException.class)
     public R<String> exceptionHandler(SQLIntegrityConstraintViolationException e) {
         log.error(e.getMessage());
-        return R.error("出现SQL错误");
+        if (e.getMessage().contains("Duplicate entry")) {
+            String[] split = e.getMessage().split(" ");
+            String msg = split[2] + "已存在";
+            return R.error(msg);
+        }
+        return R.error("出现未知SQL错误");
     }
 }
 
