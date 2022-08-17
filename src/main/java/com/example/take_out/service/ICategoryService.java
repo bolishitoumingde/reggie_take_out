@@ -9,6 +9,4 @@ import com.example.take_out.entity.Category;
 * @createDate 2022-08-17 10:06:53
 */
 public interface ICategoryService extends IService<Category> {
-
-
 }
