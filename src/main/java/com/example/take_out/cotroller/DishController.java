@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.take_out.cotroller.utils.R;
 import com.example.take_out.entity.Dish;
+import com.example.take_out.entity.DishDto;
+import com.example.take_out.service.IDishFlavorService;
 import com.example.take_out.service.IDishService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,9 @@ public class DishController {
     @Autowired
     private IDishService dishService;
 
+    @Autowired
+    private IDishFlavorService dishFlavorService;
+
     @GetMapping("/page")
     public R<Page<Dish>> page(@RequestParam("page") int currentPage,
                               @RequestParam("pageSize") int pageSize) {
@@ -27,10 +32,15 @@ public class DishController {
         return R.success(dishService.page(page, lqw));
     }
 
+    /**
+     * 新增菜品
+     *
+     * @param dishDto 菜品信息
+     */
     @PostMapping
-    public R<String> addDish(@RequestBody Dish dish) {
-        dishService.save(dish);
-        return R.success("添加成功");
+    public R<String> addDish(@RequestBody DishDto dishDto) {
+        log.info(dishDto.toString());
+        return dishService.addDish(dishDto);
     }
 
 }
