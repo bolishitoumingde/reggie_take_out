@@ -2,6 +2,7 @@ package com.example.take_out.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -16,7 +17,7 @@ import lombok.Data;
 @Data
 public class SetmealDish implements Serializable {
 
-    @TableField(exist = false)
+    @Serial
     private static final long serialVersionUID = 1L;
     /**
      * 主键
@@ -27,12 +28,12 @@ public class SetmealDish implements Serializable {
     /**
      * 套餐id 
      */
-    private String setmealId;
+    private Long setmealId;
 
     /**
      * 菜品id
      */
-    private String dishId;
+    private Long dishId;
 
     /**
      * 菜品名称 （冗余字段）

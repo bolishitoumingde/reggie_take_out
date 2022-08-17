@@ -1,5 +1,6 @@
 package com.example.take_out.cotroller;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.take_out.cotroller.utils.R;
 import com.example.take_out.entity.Dish;
@@ -8,6 +9,9 @@ import com.example.take_out.service.IDishService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.awt.*;
+import java.util.List;
 
 @Slf4j
 @RestController
@@ -56,6 +60,15 @@ public class DishController {
     @PutMapping()
     public R<String> updateDish(@RequestBody DishDto dishDto) {
         return dishService.updateDish(dishDto);
+    }
+
+    @GetMapping("/list")
+    public R<List<Dish>> getDish(Dish dish) {
+        LambdaQueryWrapper<Dish> lqw = new LambdaQueryWrapper<>();
+        lqw.eq(dish.getCategoryId() != null, Dish::getCategoryId, dish.getCategoryId());
+        lqw.orderByDesc(Dish::getSort).orderByDesc(Dish::getUpdateTime);
+        List<Dish> list = dishService.list(lqw);
+        return R.success(list);
     }
 
 }

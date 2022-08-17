@@ -42,7 +42,6 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements ID
      * @param dishDto 菜品信息
      * @return 成功
      */
-    // TODO 图片信息为空
     @Override
     @Transactional
     public R<String> addDish(DishDto dishDto) {

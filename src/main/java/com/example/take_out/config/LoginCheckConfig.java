@@ -22,7 +22,14 @@ public class LoginCheckConfig implements WebMvcConfigurer {
                 "/backend/js/**",
                 "/backend/page/**",
                 "/backend/plugins/**",
-                "/backend/styles/**"
+                "/backend/styles/**",
+
+                "/front/api/**",
+                "/front/images/**",
+                "/front/js/**",
+                "/front/page/**",
+                "/front/plugins/**",
+                "/front/styles/**"
         );
     }
 }
