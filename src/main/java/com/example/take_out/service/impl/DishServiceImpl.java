@@ -64,15 +64,12 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements ID
 
     @Override
     public R<Page<Dish>> getPage(int currentPage, int pageSize, String name) {
+        System.out.println(currentPage);
         LambdaQueryWrapper<Dish> lqw = new LambdaQueryWrapper<>();
         lqw.like(Strings.isNotEmpty(name), Dish::getName, name);
         lqw.orderByDesc(Dish::getSort);
-        Page<Dish> page = new Page<>();
+        Page<Dish> page = new Page<>(currentPage, pageSize);
         this.page(page, lqw);
-        List<Dish> records = page.getRecords();
-        for (Dish record : records) {
-            System.out.println(record);
-        }
         return R.success(page);
     }
 
