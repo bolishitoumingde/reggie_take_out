@@ -37,4 +37,14 @@ public class DishController {
         return dishService.addDish(dishDto);
     }
 
+    @GetMapping("/{id}")
+    public R<DishDto> getById(@PathVariable Long id) {
+        return dishService.getById(id);
+    }
+
+    @PutMapping()
+    public R<String> updateDish(@RequestBody DishDto dishDto) {
+        return null;
+    }
+
 }

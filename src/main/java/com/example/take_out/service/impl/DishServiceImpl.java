@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.take_out.cotroller.utils.R;
+import com.example.take_out.entity.Category;
 import com.example.take_out.entity.Dish;
 import com.example.take_out.dto.DishDto;
 import com.example.take_out.entity.DishFlavor;
@@ -12,6 +13,7 @@ import com.example.take_out.service.IDishService;
 import com.example.take_out.mapper.DishMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.logging.log4j.util.Strings;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -72,6 +74,46 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements ID
             System.out.println(record);
         }
         return R.success(page);
+    }
+
+    /**
+     * 修改菜品信息时，先获取菜品信息
+     *
+     * @param id 菜品id
+     * @return 成功
+     */
+    @Override
+    public R<DishDto> getById(Long id) {
+        // 查询菜品信息
+        Dish dish = dishMapper.selectById(id);
+        // 创建DishDto对象
+        DishDto dishDto = new DishDto();
+        // 属性拷贝
+        BeanUtils.copyProperties(dish, dishDto);
+        LambdaQueryWrapper<DishFlavor> lqw = new LambdaQueryWrapper<>();
+        // 根据菜品id获取口味列表
+        lqw.eq(DishFlavor::getDishId, id);
+        List<DishFlavor> flavorList = dishFlavorService.list(lqw);
+        // 设置口味列表
+        dishDto.setFlavors(flavorList);
+        return R.success(dishDto);
+    }
+
+    @Override
+    public R<String> updateDish(DishDto dishDto) {
+        this.updateDish(dishDto);
+        // 获取菜品id
+        Long dishDtoId = dishDto.getId();
+        // 获取口味信息
+        List<DishFlavor> flavors = dishDto.getFlavors();
+        // 遍历口味，添加菜品id
+        flavors = flavors.stream().map((item) -> {
+            item.setDishId(dishDtoId);
+            return item;
+        }).collect(Collectors.toList());
+        // 保存口味信息
+        dishFlavorService.saveBatch(flavors);
+        return R.success("添加成功");
     }
 }
 
