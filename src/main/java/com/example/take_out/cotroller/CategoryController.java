@@ -10,6 +10,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Slf4j
 @RestController
 @RequestMapping("/category")
@@ -72,5 +74,13 @@ public class CategoryController {
             return R.success("修改成功");
         }
         return R.error("修改失败");
+    }
+
+    @GetMapping("/list")
+    public R<List<Category>> listCategory(int type) {
+        LambdaQueryWrapper<Category> lqw = new LambdaQueryWrapper<>();
+        lqw.eq(Category::getType, type);
+        List<Category> categoryList = categoryService.list(lqw);
+        return R.success(categoryList);
     }
 }
