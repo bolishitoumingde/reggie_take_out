@@ -8,6 +8,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
 * @description 针对表【dish_flavor(菜品口味关系表)】的数据库操作Service
 * @createDate 2022-08-17 13:39:15
 */
-public interface DishFlavorService extends IService<DishFlavor> {
+public interface IDishFlavorService extends IService<DishFlavor> {
 
 }

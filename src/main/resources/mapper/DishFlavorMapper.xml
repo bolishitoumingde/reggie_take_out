@@ -15,5 +15,5 @@
             <result property="updateUser" column="update_user" jdbcType="BIGINT"/>
             <result property="isDeleted" column="is_deleted" jdbcType="INTEGER"/>
     </resultMap>
-    
+
 </mapper>
