@@ -7,10 +7,7 @@ import com.example.take_out.entity.Dish;
 import com.example.take_out.service.IDishService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RestController
@@ -28,6 +25,12 @@ public class DishController {
         LambdaQueryWrapper<Dish> lqw = new LambdaQueryWrapper<>();
         lqw.orderByDesc(Dish::getSort);
         return R.success(dishService.page(page, lqw));
+    }
+
+    @PostMapping
+    public R<String> addDish(@RequestBody Dish dish) {
+        dishService.save(dish);
+        return R.success("添加成功");
     }
 
 }
