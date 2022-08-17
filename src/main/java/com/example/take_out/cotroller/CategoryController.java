@@ -39,8 +39,7 @@ public class CategoryController {
      * @return 页面数据
      */
     @GetMapping("/page")
-    public R<Page<Category>> page(@RequestParam("page") int currentPage,
-                                  @RequestParam("pageSize") int pageSize) {
+    public R<Page<Category>> page(@RequestParam("page") int currentPage, @RequestParam("pageSize") int pageSize) {
         log.info("当前页：{}，页面大小：{}", currentPage, pageSize);
         Page<Category> page = new Page<>(currentPage, pageSize);
         LambdaQueryWrapper<Category> lqw = new LambdaQueryWrapper<>();
@@ -60,5 +59,17 @@ public class CategoryController {
         return R.success("删除成功");
     }
 
-
+    /**
+     * 更新分类
+     *
+     * @param category 分类信息
+     * @return 修改信息
+     */
+    @PutMapping
+    public R<String> updateCategory(@RequestBody Category category) {
+        if (categoryService.updateById(category)) {
+            return R.success("修改成功");
+        }
+        return R.error("修改失败");
+    }
 }

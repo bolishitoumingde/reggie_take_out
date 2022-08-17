@@ -75,7 +75,6 @@ public class EmployeeController {
     @PutMapping
     public R<String> updateEmployee(HttpServletRequest request, @RequestBody Employee employee) {
         Long id = (Long) request.getSession().getAttribute("employee");
-        System.out.println(employee.getId());
         employee.setUpdateUser(id);
         if (employeeService.updateById(employee)) {
             return R.success("修改成功");
