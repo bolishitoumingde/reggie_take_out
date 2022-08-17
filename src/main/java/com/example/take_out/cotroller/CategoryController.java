@@ -39,7 +39,8 @@ public class CategoryController {
      * @return 页面数据
      */
     @GetMapping("/page")
-    public R<Page<Category>> page(@RequestParam("page") int currentPage, @RequestParam("pageSize") int pageSize) {
+    public R<Page<Category>> page(@RequestParam("page") int currentPage,
+                                  @RequestParam("pageSize") int pageSize) {
         log.info("当前页：{}，页面大小：{}", currentPage, pageSize);
         Page<Category> page = new Page<>(currentPage, pageSize);
         LambdaQueryWrapper<Category> lqw = new LambdaQueryWrapper<>();
