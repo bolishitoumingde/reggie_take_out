@@ -8,6 +8,7 @@ import com.example.take_out.entity.Category;
 import com.example.take_out.entity.Dish;
 import com.example.take_out.dto.DishDto;
 import com.example.take_out.entity.DishFlavor;
+import com.example.take_out.entity.Setmeal;
 import com.example.take_out.service.IDishFlavorService;
 import com.example.take_out.service.IDishService;
 import com.example.take_out.mapper.DishMapper;
@@ -128,6 +129,16 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements ID
         // 保存口味信息
         dishFlavorService.saveBatch(flavors);
         return R.success("修改成功");
+    }
+
+    @Override
+    public R<String> stop(int status, List<Long> ids) {
+        LambdaQueryWrapper<Dish> lqw = new LambdaQueryWrapper<>();
+        lqw.in(Dish::getId, ids);
+        Dish dish = new Dish();
+        dish.setStatus(status);
+        this.update(dish, lqw);
+        return R.success("成功");
     }
 }
 

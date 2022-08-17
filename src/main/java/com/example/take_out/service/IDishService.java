@@ -6,6 +6,8 @@ import com.example.take_out.entity.Dish;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.example.take_out.dto.DishDto;
 
+import java.util.List;
+
 /**
  * @author Administrator
  * @description 针对表【dish(菜品管理)】的数据库操作Service
@@ -20,4 +22,6 @@ public interface IDishService extends IService<Dish> {
     R<DishDto> getById(Long id);
 
     R<String> updateDish(DishDto dishDto);
+
+    R<String> stop(int status, List<Long> ids);
 }

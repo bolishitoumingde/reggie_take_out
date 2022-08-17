@@ -24,8 +24,8 @@ public class DishController {
 
     @GetMapping("/page")
     public R<Page<DishDto>> page(@RequestParam("page") int currentPage,
-                              @RequestParam("pageSize") int pageSize,
-                              String name) {
+                                 @RequestParam("pageSize") int pageSize,
+                                 String name) {
         log.info("当前页：{}，页面大小：{}，菜品名称：{}", currentPage, pageSize, name);
         return dishService.getPage(currentPage, pageSize, name);
     }
@@ -69,5 +69,11 @@ public class DishController {
         List<Dish> list = dishService.list(lqw);
         return R.success(list);
     }
+
+    @PostMapping("/status/{status}")
+    public R<String> stop(@PathVariable("status") int status, @RequestParam("ids") List<Long> ids) {
+        return dishService.stop(status, ids);
+    }
+
 
 }

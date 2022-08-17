@@ -15,6 +15,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -55,6 +58,34 @@ public class SetmealServiceImpl extends ServiceImpl<SetmealMapper, Setmeal>
         setmealDishService.saveBatch(setmealDishes);
         return R.success("添加成功");
     }
+
+
+    public R<String> removeBatchByIds(List<Long> ids) {
+        LambdaQueryWrapper<Setmeal> lqw = new LambdaQueryWrapper<>();
+        lqw.in(Setmeal::getId, ids);
+        lqw.eq(Setmeal::getStatus, 1);
+        // 存在启售的套餐
+        if (this.count(lqw) > 0) {
+            return R.error("套餐正在售卖，请先停售");
+        }
+        this.removeBatchByIds(ids);
+        LambdaQueryWrapper<SetmealDish> lqwDish = new LambdaQueryWrapper<>();
+        lqwDish.in(SetmealDish::getSetmealId, ids);
+        setmealDishService.remove(lqwDish);
+        return R.success("删除成功");
+    }
+
+    @Override
+    public R<String> stop(int status, List<Long> ids) {
+        LambdaQueryWrapper<Setmeal> lqw = new LambdaQueryWrapper<>();
+        lqw.in(Setmeal::getId, ids);
+        Setmeal setmeal = new Setmeal();
+        setmeal.setStatus(status);
+        this.update(setmeal, lqw);
+        return R.success("成功");
+    }
+
+
 }
 
 
