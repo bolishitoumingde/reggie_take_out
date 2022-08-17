@@ -1,5 +1,6 @@
 package com.example.take_out.dto;
 
+import com.example.take_out.entity.Category;
 import com.example.take_out.entity.Dish;
 import com.example.take_out.entity.DishFlavor;
 import lombok.Data;
@@ -15,7 +16,7 @@ public class DishDto extends Dish {
 
     private List<DishFlavor> flavors = new ArrayList<>();
 
-    private String categoryName;
+    private Category category;
 
     private Integer copies;
 }

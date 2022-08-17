@@ -1,5 +1,6 @@
 package com.example.take_out.service;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.take_out.cotroller.utils.R;
 import com.example.take_out.entity.Dish;
 import com.baomidou.mybatisplus.extension.service.IService;
@@ -14,4 +15,5 @@ public interface IDishService extends IService<Dish> {
 
     R<String> addDish(DishDto dishDto);
 
+    R<Page<Dish>> getPage(int currentPage, int pageSize, String name);
 }
