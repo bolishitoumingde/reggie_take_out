@@ -48,6 +48,12 @@ public class CategoryController {
         return R.success(categoryService.page(page, lqw));
     }
 
+    /**
+     * 删除分类
+     *
+     * @param id 分类id
+     * @return 删除信息
+     */
     @DeleteMapping
     public R<String> delById(@RequestParam("ids") Long id) {
         categoryService.removeById(id);

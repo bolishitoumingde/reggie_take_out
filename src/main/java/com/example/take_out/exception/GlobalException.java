@@ -29,5 +29,11 @@ public class GlobalException {
         }
         return R.error("出现未知SQL错误");
     }
+
+    @ExceptionHandler(ServiceException.class)
+    public R<String> exceptionHandler(ServiceException e) {
+        log.error(e.getMessage());
+        return R.error(e.getMessage());
+    }
 }
 

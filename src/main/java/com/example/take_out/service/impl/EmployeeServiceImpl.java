@@ -31,11 +31,11 @@ public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee> i
         password = DigestUtils.md5DigestAsHex(password.getBytes());
         employee.setPassword(password);
 
-        LambdaQueryWrapper<Employee> queryWrapper = new LambdaQueryWrapper<>();
+        LambdaQueryWrapper<Employee> lqw = new LambdaQueryWrapper<>();
         // 搜索用户名
-        queryWrapper.eq(Employee::getUsername, employee.getUsername());
+        lqw.eq(Employee::getUsername, employee.getUsername());
         // 返回该用户名的对象
-        Employee emp = employeeMapper.selectOne(queryWrapper);
+        Employee emp = employeeMapper.selectOne(lqw);
         if (emp == null) {
             // 未查询到该用户
             return R.error("用户名不存在");

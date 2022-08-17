@@ -2,7 +2,7 @@ package com.example.take_out.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.take_out.entity.Dish;
-import com.example.take_out.service.DishService;
+import com.example.take_out.service.IDishService;
 import com.example.take_out.mapper.DishMapper;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 */
 @Service
 public class DishServiceImpl extends ServiceImpl<DishMapper, Dish>
-    implements DishService{
+    implements IDishService {
 
 }
 
