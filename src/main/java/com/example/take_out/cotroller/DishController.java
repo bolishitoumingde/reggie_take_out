@@ -4,8 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.take_out.cotroller.utils.R;
 import com.example.take_out.entity.Dish;
-import com.example.take_out.entity.DishDto;
-import com.example.take_out.service.IDishFlavorService;
+import com.example.take_out.dto.DishDto;
 import com.example.take_out.service.IDishService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +18,6 @@ public class DishController {
     @Autowired
     private IDishService dishService;
 
-    @Autowired
-    private IDishFlavorService dishFlavorService;
 
     @GetMapping("/page")
     public R<Page<Dish>> page(@RequestParam("page") int currentPage,

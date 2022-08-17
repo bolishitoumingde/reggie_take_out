@@ -3,7 +3,7 @@ package com.example.take_out.service;
 import com.example.take_out.cotroller.utils.R;
 import com.example.take_out.entity.Dish;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.example.take_out.entity.DishDto;
+import com.example.take_out.dto.DishDto;
 
 /**
  * @author Administrator

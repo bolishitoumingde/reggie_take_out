@@ -3,7 +3,7 @@ package com.example.take_out.service.impl;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.take_out.cotroller.utils.R;
 import com.example.take_out.entity.Dish;
-import com.example.take_out.entity.DishDto;
+import com.example.take_out.dto.DishDto;
 import com.example.take_out.entity.DishFlavor;
 import com.example.take_out.service.IDishFlavorService;
 import com.example.take_out.service.IDishService;
@@ -36,7 +36,10 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements ID
         // 获取口味信息
         List<DishFlavor> flavors = dishDto.getFlavors();
         // 遍历口味，添加菜品id
-        flavors = flavors.stream().peek((item) -> item.setDishId(dishDtoId)).collect(Collectors.toList());
+        flavors = flavors.stream().map((item) -> {
+            item.setDishId(dishDtoId);
+            return item;
+        }).collect(Collectors.toList());
         // 保存口味信息
         dishFlavorService.saveBatch(flavors);
         return R.success("添加成功");

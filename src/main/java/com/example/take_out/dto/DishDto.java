@@ -1,9 +1,9 @@
-package com.example.take_out.entity;
+package com.example.take_out.dto;
 
+import com.example.take_out.entity.Dish;
+import com.example.take_out.entity.DishFlavor;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,8 +11,7 @@ import java.util.List;
 
 
 @Data
-@EqualsAndHashCode(callSuper = true)
-public class DishDto extends Dish implements Serializable {
+public class DishDto extends Dish {
 
     private List<DishFlavor> flavors = new ArrayList<>();
 
