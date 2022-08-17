@@ -3,14 +3,12 @@ package com.example.take_out.cotroller;
 import com.example.take_out.cotroller.utils.R;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.IOException;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
+import java.io.*;
 import java.util.UUID;
 
 /**
@@ -25,6 +23,12 @@ public class CommonController {
     @Value("${upload.path}")
     private String path;
 
+    /**
+     * 文件上传
+     *
+     * @param file 文件对象
+     * @return 上传信息
+     */
     @PostMapping("/upload")
     public R<String> upload(@RequestPart("file") MultipartFile file) {
         log.info("文件上传");
@@ -39,5 +43,29 @@ public class CommonController {
             throw new RuntimeException(e);
         }
         return null;
+    }
+
+
+    /**
+     * 文件下载
+     *
+     * @param name     文件名
+     * @param response resp对象
+     * @return 文件信息
+     */
+    @GetMapping("/download")
+    public R<String> download(@RequestParam("name") String name, HttpServletResponse response) {
+        try (BufferedInputStream bis = new BufferedInputStream(new FileInputStream(path + name));
+             ServletOutputStream os = response.getOutputStream()) {
+            response.setContentType("image/jpeg");
+            byte[] buffer = new byte[1024];
+            int len;
+            while ((len = bis.read(buffer)) != -1) {
+                os.write(buffer, 0, len);
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return R.success("下载成功");
     }
 }
