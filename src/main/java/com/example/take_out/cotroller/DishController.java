@@ -18,6 +18,7 @@ public class DishController {
     private IDishService dishService;
 
 
+    // TODO 菜品分类不显示，需要联表查询
     @GetMapping("/page")
     public R<Page<Dish>> page(@RequestParam("page") int currentPage,
                               @RequestParam("pageSize") int pageSize,
@@ -37,14 +38,24 @@ public class DishController {
         return dishService.addDish(dishDto);
     }
 
+    /**
+     * 根据菜品id获取菜品信息
+     *
+     * @param id 菜品id
+     */
     @GetMapping("/{id}")
     public R<DishDto> getById(@PathVariable Long id) {
         return dishService.getById(id);
     }
 
+    /**
+     * 修改菜品
+     *
+     * @param dishDto 修改的菜品信息
+     */
     @PutMapping()
     public R<String> updateDish(@RequestBody DishDto dishDto) {
-        return null;
+        return dishService.updateDish(dishDto);
     }
 
 }

@@ -99,11 +99,22 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements ID
         return R.success(dishDto);
     }
 
+    /**
+     * 修改菜品
+     *
+     * @param dishDto 修改的菜品信息
+     */
     @Override
     public R<String> updateDish(DishDto dishDto) {
+        // 更新dish表
         this.updateDish(dishDto);
         // 获取菜品id
         Long dishDtoId = dishDto.getId();
+        // 清理当前菜品的口味信息
+        LambdaQueryWrapper<DishFlavor> lqw = new LambdaQueryWrapper<>();
+        lqw.eq(DishFlavor::getDishId, dishDtoId);
+        // 已经设置逻辑删除
+        dishFlavorService.remove(lqw);
         // 获取口味信息
         List<DishFlavor> flavors = dishDto.getFlavors();
         // 遍历口味，添加菜品id
@@ -113,7 +124,7 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements ID
         }).collect(Collectors.toList());
         // 保存口味信息
         dishFlavorService.saveBatch(flavors);
-        return R.success("添加成功");
+        return R.success("修改成功");
     }
 }
 
