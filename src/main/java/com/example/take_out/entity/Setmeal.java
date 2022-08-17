@@ -6,17 +6,15 @@ import java.io.Serial;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
-
 import lombok.Data;
 
 /**
- * 菜品管理
- *
- * @TableName dish
+ * 套餐
+ * @TableName setmeal
  */
-@TableName(value = "dish")
+@TableName(value ="setmeal")
 @Data
-public class Dish implements Serializable {
+public class Setmeal implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
@@ -27,29 +25,29 @@ public class Dish implements Serializable {
     private Long id;
 
     /**
-     * 菜品名称
-     */
-    private String name;
-
-    /**
      * 菜品分类id
      */
     private Long categoryId;
 
     /**
-     * 菜品价格
+     * 套餐名称
+     */
+    private String name;
+
+    /**
+     * 套餐价格
      */
     private BigDecimal price;
 
     /**
-     * 商品码
+     * 状态 0:停用 1:启用
      */
-    private String code;
+    private Integer status;
 
     /**
-     * 图片
+     * 编码
      */
-    private String image;
+    private String code;
 
     /**
      * 描述信息
@@ -57,14 +55,9 @@ public class Dish implements Serializable {
     private String description;
 
     /**
-     * 0 停售 1 起售
+     * 图片
      */
-    private Integer status;
-
-    /**
-     * 顺序
-     */
-    private Integer sort;
+    private String image;
 
     /**
      * 创建时间
@@ -95,5 +88,4 @@ public class Dish implements Serializable {
      */
     @TableLogic
     private Integer isDeleted;
-
 }
