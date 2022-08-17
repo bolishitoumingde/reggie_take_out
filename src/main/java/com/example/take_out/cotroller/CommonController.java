@@ -32,7 +32,7 @@ public class CommonController {
         // 获取后缀
         assert originalFilename != null;
         String substring = originalFilename.substring(originalFilename.lastIndexOf("."));
-        String fileName = UUID.randomUUID().toString() + substring;
+        String fileName = UUID.randomUUID() + substring;
         try {
             file.transferTo(new File(path + fileName));
         } catch (IOException e) {
