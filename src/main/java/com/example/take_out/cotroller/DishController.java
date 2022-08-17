@@ -22,9 +22,8 @@ public class DishController {
     private IDishService dishService;
 
 
-    // TODO 菜品分类不显示，需要联表查询
     @GetMapping("/page")
-    public R<Page<Dish>> page(@RequestParam("page") int currentPage,
+    public R<Page<DishDto>> page(@RequestParam("page") int currentPage,
                               @RequestParam("pageSize") int pageSize,
                               String name) {
         log.info("当前页：{}，页面大小：{}，菜品名称：{}", currentPage, pageSize, name);

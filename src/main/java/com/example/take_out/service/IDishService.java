@@ -15,7 +15,7 @@ public interface IDishService extends IService<Dish> {
 
     R<String> addDish(DishDto dishDto);
 
-    R<Page<Dish>> getPage(int currentPage, int pageSize, String name);
+    R<Page<DishDto>> getPage(int currentPage, int pageSize, String name);
 
     R<DishDto> getById(Long id);
 

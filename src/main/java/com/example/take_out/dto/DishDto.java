@@ -1,5 +1,6 @@
 package com.example.take_out.dto;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.example.take_out.entity.Category;
 import com.example.take_out.entity.Dish;
 import com.example.take_out.entity.DishFlavor;
@@ -16,7 +17,8 @@ public class DishDto extends Dish {
 
     private List<DishFlavor> flavors = new ArrayList<>();
 
-    private Category category;
+    private String categoryName;
 
     private Integer copies;
+
 }
