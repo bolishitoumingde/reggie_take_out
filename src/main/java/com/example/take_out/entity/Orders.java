@@ -1,22 +1,21 @@
 package com.example.take_out.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
 
 import java.io.Serial;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Date;
+
 import lombok.Data;
 
 /**
  * 订单表
+ *
  * @TableName orders
  */
-@TableName(value ="orders")
+@TableName(value = "orders")
 @Data
 public class Orders implements Serializable {
 
@@ -76,22 +75,22 @@ public class Orders implements Serializable {
     private String remark;
 
     /**
-     * 
+     *
      */
     private String phone;
 
     /**
-     * 
+     *
      */
     private String address;
 
     /**
-     * 
+     *
      */
     private String userName;
 
     /**
-     * 
+     *
      */
     private String consignee;
 }

@@ -104,7 +104,6 @@ public class ShoppingCartServiceImpl extends ServiceImpl<ShoppingCartMapper, Sho
         }
         Collection<ShoppingCart> values = map.values();
         List<ShoppingCart> shoppingCarts = values.stream().toList();
-        System.out.println(shoppingCarts);
         return R.success(shoppingCarts);
     }
 
