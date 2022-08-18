@@ -53,4 +53,14 @@ public class SetmealController {
     public R<String> stop(@PathVariable("status") int status, @RequestParam("ids") List<Long> ids) {
         return setmealService.stop(status, ids);
     }
+
+    @GetMapping("/list")
+    public R<List<Setmeal>> list(@RequestParam("categoryId") Long id, int status) {
+        LambdaQueryWrapper<Setmeal> lqw = new LambdaQueryWrapper<>();
+        lqw.eq(Setmeal::getCategoryId, id).eq(Setmeal::getStatus, status);
+        List<Setmeal> setmealList = setmealService.list(lqw);
+        return R.success(setmealList);
+    }
+
+    // public R<> getDish()
 }

@@ -4,11 +4,9 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.take_out.cotroller.utils.R;
-import com.example.take_out.entity.Category;
 import com.example.take_out.entity.Dish;
 import com.example.take_out.dto.DishDto;
 import com.example.take_out.entity.DishFlavor;
-import com.example.take_out.entity.Setmeal;
 import com.example.take_out.service.IDishFlavorService;
 import com.example.take_out.service.IDishService;
 import com.example.take_out.mapper.DishMapper;
@@ -19,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -139,6 +138,25 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements ID
         dish.setStatus(status);
         this.update(dish, lqw);
         return R.success("成功");
+    }
+
+    @Override
+    public R<List<DishDto>> getDish(Dish dish) {
+        LambdaQueryWrapper<Dish> lqw = new LambdaQueryWrapper<>();
+        lqw.eq(dish.getCategoryId() != null, Dish::getCategoryId, dish.getCategoryId());
+        lqw.orderByDesc(Dish::getSort).orderByDesc(Dish::getUpdateTime);
+        List<Dish> list = this.list(lqw);
+        LambdaQueryWrapper<DishFlavor> lqwDishFlavor = new LambdaQueryWrapper<>();
+        List<DishDto> dishDtos = new ArrayList<>();
+        for (Dish dish1 : list) {
+            lqwDishFlavor.eq(DishFlavor::getDishId, dish1.getId());
+            List<DishFlavor> list1 = dishFlavorService.list(lqwDishFlavor);
+            DishDto dishDto = new DishDto();
+            BeanUtils.copyProperties(dish1, dishDto);
+            dishDto.setFlavors(list1);
+            dishDtos.add(dishDto);
+        }
+        return R.success(dishDtos);
     }
 }
 

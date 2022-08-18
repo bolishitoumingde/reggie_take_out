@@ -1,6 +1,5 @@
 package com.example.take_out.cotroller;
 
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.take_out.cotroller.utils.R;
 import com.example.take_out.entity.Dish;
@@ -19,7 +18,6 @@ public class DishController {
 
     @Autowired
     private IDishService dishService;
-
 
     @GetMapping("/page")
     public R<Page<DishDto>> page(@RequestParam("page") int currentPage,
@@ -60,13 +58,15 @@ public class DishController {
         return dishService.updateDish(dishDto);
     }
 
+    /**
+     * 获取菜品信息，包括口味信息
+     *
+     * @param dish 菜品id
+     * @return 菜品信息DishDto
+     */
     @GetMapping("/list")
-    public R<List<Dish>> getDish(Dish dish) {
-        LambdaQueryWrapper<Dish> lqw = new LambdaQueryWrapper<>();
-        lqw.eq(dish.getCategoryId() != null, Dish::getCategoryId, dish.getCategoryId());
-        lqw.orderByDesc(Dish::getSort).orderByDesc(Dish::getUpdateTime);
-        List<Dish> list = dishService.list(lqw);
-        return R.success(list);
+    public R<List<DishDto>> getDish(Dish dish) {
+        return dishService.getDish(dish);
     }
 
     @PostMapping("/status/{status}")

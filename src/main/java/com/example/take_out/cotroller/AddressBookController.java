@@ -82,7 +82,10 @@ public class AddressBookController {
     public R<List<AddressBook>> list(AddressBook addressBook) {
         addressBook.setUserId(BaseContext.getId());
         LambdaQueryWrapper<AddressBook> lqw = new LambdaQueryWrapper<>();
-        lqw.eq(addressBook.getUserId() != null, AddressBook::getUserId, addressBook.getUserId());
+        if (addressBook.getUserId() == null) {
+            return R.error("未查询到用户名");
+        }
+        lqw.eq(AddressBook::getUserId, addressBook.getUserId());
         lqw.orderByDesc(AddressBook::getIsDefault).orderByDesc(AddressBook::getUpdateTime);
 
         return R.success(addressBookService.list(lqw));

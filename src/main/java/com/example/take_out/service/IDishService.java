@@ -24,4 +24,6 @@ public interface IDishService extends IService<Dish> {
     R<String> updateDish(DishDto dishDto);
 
     R<String> stop(int status, List<Long> ids);
+
+    R<List<DishDto>> getDish(Dish dish);
 }

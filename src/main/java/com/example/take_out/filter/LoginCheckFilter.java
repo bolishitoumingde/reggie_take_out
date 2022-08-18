@@ -2,6 +2,7 @@ package com.example.take_out.filter;
 
 import com.alibaba.fastjson.JSON;
 import com.example.take_out.cotroller.utils.R;
+import com.example.take_out.utils.BaseContext;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.util.AntPathMatcher;
@@ -37,7 +38,11 @@ public class LoginCheckFilter implements Filter {
                 "/employee/login",
                 "/employee/logout",
                 "/backend/**",
-                "/front/**"
+                "/user/login",
+                "/user/logout",
+                "/user/sendMsg",
+                "/front/**",
+                "/common/**"
         };
         //  B. 判断本次请求, 是否需要登录, 才可以访问
         boolean check = check(urls, requestURI);
@@ -48,8 +53,17 @@ public class LoginCheckFilter implements Filter {
             return;
         }
         //  D. 判断登录状态，如果已登录，则直接放行
-        if (request.getSession().getAttribute("employee") != null) {
-            log.info("用户已登录，用户id为：{}", request.getSession().getAttribute("employee"));
+        Long empId = (Long) request.getSession().getAttribute("employee");
+        if (empId != null) {
+            log.info("用户已登录，用户id为：{}", empId);
+            BaseContext.setId(empId);
+            filterChain.doFilter(request, response);
+            return;
+        }
+        Long userId = (Long) request.getSession().getAttribute("user");
+        if (userId != null) {
+            log.info("用户已登录，用户id为：{}", userId);
+            BaseContext.setId(userId);
             filterChain.doFilter(request, response);
             return;
         }
