@@ -6,6 +6,7 @@ import com.example.take_out.cotroller.utils.R;
 import com.example.take_out.entity.AddressBook;
 import com.example.take_out.service.IAddressBookService;
 import com.example.take_out.utils.BaseContext;
+import com.example.take_out.utils.ServletUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -28,7 +29,7 @@ public class AddressBookController {
      */
     @PostMapping
     public R<String> addAddress(@RequestBody AddressBook addressBook) {
-        Long id = BaseContext.getId();
+        Long id = (Long) ServletUtil.getSession().getAttribute("user");
         addressBook.setUserId(id);
         addressBookService.save(addressBook);
         return R.success("添加成功");
@@ -89,6 +90,21 @@ public class AddressBookController {
         lqw.orderByDesc(AddressBook::getIsDefault).orderByDesc(AddressBook::getUpdateTime);
 
         return R.success(addressBookService.list(lqw));
+    }
+
+    /**
+     * 删除地址
+     *
+     * @param id 地址id
+     * @return 成功失败
+     */
+    @DeleteMapping
+    public R<String> delById(@RequestParam("ids") Long id) {
+        if (addressBookService.removeById(id)) {
+            return R.success("删除成功");
+        }
+        return R.error("删除失败");
+
     }
 
 }
