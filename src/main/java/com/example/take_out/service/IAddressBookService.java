@@ -13,4 +13,6 @@ public interface IAddressBookService extends IService<AddressBook> {
 
     R<String> setDefault(AddressBook addressBook);
 
+    R<Object> getDefault();
+
 }

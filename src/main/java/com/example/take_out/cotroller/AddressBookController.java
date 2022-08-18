@@ -59,5 +59,14 @@ public class AddressBookController {
     }
 
 
+    /**
+     * 获取默认地址
+     *
+     * @return 默认地址信息
+     */
+    @GetMapping("/default")
+    public R<Object> getDefault() {
+        return addressBookService.getDefault();
+    }
 
 }

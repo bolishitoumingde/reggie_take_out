@@ -1,5 +1,6 @@
 package com.example.take_out.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.take_out.cotroller.utils.R;
@@ -30,6 +31,18 @@ public class AddressBookServiceImpl extends ServiceImpl<AddressBookMapper, Addre
         addressBook.setIsDefault(1);
         this.updateById(addressBook);
         return R.success("修改成功");
+    }
+
+    @Override
+    public R<Object> getDefault() {
+        LambdaQueryWrapper<AddressBook> lqw = new LambdaQueryWrapper<>();
+        lqw.eq(AddressBook::getUserId, BaseContext.getId());
+        lqw.eq(AddressBook::getIsDefault, 1);
+        AddressBook addressBook = this.getOne(lqw);
+        if (addressBook != null) {
+            return R.success(addressBook);
+        }
+        return R.error("未找到默认地址");
     }
 }
 
