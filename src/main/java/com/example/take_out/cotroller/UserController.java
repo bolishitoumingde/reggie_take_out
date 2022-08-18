@@ -69,6 +69,18 @@ public class UserController {
             session.setAttribute("user", user.getId());
             return R.success(user);
         }
-        return R.error("登录失败");
+        LambdaQueryWrapper<User> lqw = new LambdaQueryWrapper<>();
+        lqw.eq(User::getPhone, phone);
+        User user = userService.getOne(lqw);
+        // 新用户
+        if (user == null) {
+            user = new User();
+            user.setPhone(phone);
+            userService.save(user);
+        }
+        BaseContext.setId(user.getId());
+        session.setAttribute("user", user.getId());
+        return R.success(user);
+        // return R.error("登录失败");
     }
 }
