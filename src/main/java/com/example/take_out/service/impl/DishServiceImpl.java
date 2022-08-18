@@ -146,15 +146,19 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements ID
         lqw.eq(dish.getCategoryId() != null, Dish::getCategoryId, dish.getCategoryId());
         lqw.orderByDesc(Dish::getSort).orderByDesc(Dish::getUpdateTime);
         List<Dish> list = this.list(lqw);
-        LambdaQueryWrapper<DishFlavor> lqwDishFlavor = new LambdaQueryWrapper<>();
         List<DishDto> dishDtos = new ArrayList<>();
+        LambdaQueryWrapper<DishFlavor> lqwDishFlavor;
         for (Dish dish1 : list) {
+            lqwDishFlavor = new LambdaQueryWrapper<>();
             lqwDishFlavor.eq(DishFlavor::getDishId, dish1.getId());
             List<DishFlavor> list1 = dishFlavorService.list(lqwDishFlavor);
             DishDto dishDto = new DishDto();
             BeanUtils.copyProperties(dish1, dishDto);
             dishDto.setFlavors(list1);
             dishDtos.add(dishDto);
+        }
+        for (DishDto dto : dishDtos) {
+            log.info(dto.toString());
         }
         return R.success(dishDtos);
     }
