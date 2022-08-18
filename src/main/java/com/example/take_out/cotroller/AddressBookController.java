@@ -1,6 +1,7 @@
 package com.example.take_out.cotroller;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.example.take_out.cotroller.utils.R;
 import com.example.take_out.entity.AddressBook;
 import com.example.take_out.service.IAddressBookService;
@@ -8,6 +9,8 @@ import com.example.take_out.utils.BaseContext;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Slf4j
 @RestController
@@ -67,6 +70,22 @@ public class AddressBookController {
     @GetMapping("/default")
     public R<Object> getDefault() {
         return addressBookService.getDefault();
+    }
+
+    /**
+     * 查询指定用户全部地址
+     *
+     * @param addressBook 地址类
+     * @return 该用户全部地址信息
+     */
+    @GetMapping("/list")
+    public R<List<AddressBook>> list(AddressBook addressBook) {
+        addressBook.setUserId(BaseContext.getId());
+        LambdaQueryWrapper<AddressBook> lqw = new LambdaQueryWrapper<>();
+        lqw.eq(addressBook.getUserId() != null, AddressBook::getUserId, addressBook.getUserId());
+        lqw.orderByDesc(AddressBook::getIsDefault).orderByDesc(AddressBook::getUpdateTime);
+
+        return R.success(addressBookService.list(lqw));
     }
 
 }
