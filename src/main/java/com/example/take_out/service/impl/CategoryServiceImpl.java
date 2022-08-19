@@ -32,6 +32,12 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
     @Autowired
     private ISetmealService setmealService;
 
+    /**
+     * 根据id删除分类
+     *
+     * @param id 分类id
+     * @return 成功与否
+     */
     @Override
     public boolean removeById(Serializable id) {
         LambdaQueryWrapper<Category> lqw = new LambdaQueryWrapper<>();
