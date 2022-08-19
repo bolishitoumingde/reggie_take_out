@@ -6,6 +6,7 @@ import com.example.take_out.controller.utils.R;
 import com.example.take_out.entity.User;
 import com.example.take_out.service.IUserService;
 import com.example.take_out.utils.ServletUtil;
+import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,7 @@ import java.util.Objects;
 @Slf4j
 @RestController
 @RequestMapping("/user")
+@Api("用户接口")
 public class UserController {
 
     @Autowired

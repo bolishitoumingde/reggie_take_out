@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.take_out.controller.utils.R;
 import com.example.take_out.entity.Category;
 import com.example.take_out.service.ICategoryService;
+import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +16,7 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequestMapping("/category")
+@Api("分类接口")
 public class CategoryController {
 
     @Autowired
