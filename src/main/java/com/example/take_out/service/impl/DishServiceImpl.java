@@ -84,6 +84,14 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements ID
         return R.success("添加成功");
     }
 
+    /**
+     * 菜品数据分页
+     *
+     * @param currentPage 当前页
+     * @param pageSize    页面大小
+     * @param name        查询条件，菜品名称
+     * @return 菜品分页数据
+     */
     @Override
     public R<Page<DishDto>> getPage(int currentPage, int pageSize, String name) {
         Page<DishDto> page = new Page<>(currentPage, pageSize);
@@ -146,6 +154,13 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements ID
         return R.success("修改成功");
     }
 
+    /**
+     * 停售起售菜品
+     *
+     * @param status 状态
+     * @param ids    需要修改的菜品ids
+     * @return 成功
+     */
     @Override
     public R<String> stop(int status, List<Long> ids) {
         LambdaQueryWrapper<Dish> lqw = new LambdaQueryWrapper<>();
