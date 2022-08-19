@@ -20,6 +20,12 @@ import org.springframework.transaction.annotation.Transactional;
 public class AddressBookServiceImpl extends ServiceImpl<AddressBookMapper, AddressBook>
         implements IAddressBookService {
 
+    /**
+     * 设置默认地址
+     *
+     * @param addressBook 地址表信息
+     * @return 成功
+     */
     @Override
     @Transactional
     public R<String> setDefault(AddressBook addressBook) {
@@ -33,6 +39,11 @@ public class AddressBookServiceImpl extends ServiceImpl<AddressBookMapper, Addre
         return R.success("修改成功");
     }
 
+    /**
+     * 获取默认地址
+     *
+     * @return 地址或失败信息
+     */
     @Override
     public R<Object> getDefault() {
         LambdaQueryWrapper<AddressBook> lqw = new LambdaQueryWrapper<>();
