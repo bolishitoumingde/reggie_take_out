@@ -19,6 +19,14 @@ public class DishController {
     @Autowired
     private IDishService dishService;
 
+    /**
+     * 菜品分页
+     *
+     * @param currentPage 当前页
+     * @param pageSize    页面大小
+     * @param name        查询条件 菜品名称
+     * @return 菜品分页数据
+     */
     @GetMapping("/page")
     public R<Page<DishDto>> page(@RequestParam("page") int currentPage,
                                  @RequestParam("pageSize") int pageSize,
@@ -69,6 +77,13 @@ public class DishController {
         return dishService.getDish(dish);
     }
 
+    /**
+     * 起售停售
+     *
+     * @param status 状态
+     * @param ids    需要修改状态的ids
+     * @return 成功
+     */
     @PostMapping("/status/{status}")
     public R<String> stop(@PathVariable("status") int status, @RequestParam("ids") List<Long> ids) {
         return dishService.stop(status, ids);
