@@ -41,14 +41,17 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements ID
     private IDishFlavorService dishFlavorService;
 
     /**
-     * 添加新菜品
+     * 后台添加新菜品，需要同步操作redis
      *
-     * @param dishDto 菜品信息
+     * @param dishDto 新增的菜品包括口味信息
      * @return 成功
      */
     @Override
     @Transactional
     public R<String> addDish(DishDto dishDto) {
+        /*
+          先添加到数据库
+         */
         // 保存菜品信息
         this.save(dishDto);
         // 获取菜品id
@@ -62,6 +65,22 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements ID
         }).collect(Collectors.toList());
         // 保存口味信息
         dishFlavorService.saveBatch(flavors);
+
+        /*
+          再缓存到redis
+         */
+        // 获取分类id
+        Long categoryId = dishDto.getCategoryId();
+        // redis查询当前分类
+        Map<String, DishDto> dtoMap = redisTemplate.opsForValue().get(categoryId);
+        if (dtoMap != null) { // 当前菜品分类已存在
+            // 添加进map
+            dtoMap.put(String.valueOf(dishDto.getId()), dishDto);
+            redisTemplate.opsForValue().set(categoryId, dtoMap);
+        } else { // 当前不存在于redis
+            // 直接调用getDish方法，添加进redis
+            this.getDish(dishDto);
+        }
         return R.success("添加成功");
     }
 
@@ -74,13 +93,6 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements ID
         lqw.apply("dish.category_id = category.id");
         dishMapper.getPage(page, lqw);
         return R.success(page);
-        // LambdaQueryWrapper<Dish> lqw = new LambdaQueryWrapper<>();
-        // lqw.like(Strings.isNotEmpty(name), Dish::getName, name);
-        // lqw.orderByDesc(Dish::getSort);
-        // Page<Dish> page = new Page<>(currentPage, pageSize);
-        // this.page(page, lqw);
-        // log.info(page.getRecords().toString());
-        // return R.success(page);
     }
 
     /**
