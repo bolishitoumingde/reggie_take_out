@@ -22,7 +22,10 @@ public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee> i
     private EmployeeMapper employeeMapper;
 
     /**
-     * 用户登录
+     * 员工登录
+     *
+     * @param employee 员工信息
+     * @return 员工信息
      */
     @Override
     public R<Employee> login(Employee employee) {
@@ -51,7 +54,11 @@ public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee> i
     }
 
     /**
-     * 新增用户
+     * 新增员工
+     *
+     * @param employee 员工信息
+     * @param id       修改人id
+     * @return 成功
      */
     @Override
     public R<String> save(Employee employee, Long id) {
@@ -64,25 +71,8 @@ public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee> i
         }
         // 设置默认密码
         employee.setPassword(DigestUtils.md5DigestAsHex("123456".getBytes()));
-
-        /* // 使用公共字段自动填充
-        // 设置创建时间
-        employee.setCreateTime(LocalDateTime.now());
-        // 设置更新时间
-        employee.setUpdateTime(LocalDateTime.now());
-        // 设置创建人
-        employee.setCreateUser(id);
-        // 设置更新人
-        employee.setUpdateUser(id);
-        */
         employeeMapper.insert(employee);
         return R.success("添加成功");
-    }
-
-    @Override
-    public R<String> update(Employee entity) {
-        LambdaUpdateWrapper<Employee> lqw = new LambdaUpdateWrapper<>();
-        return null;
     }
 
     /**

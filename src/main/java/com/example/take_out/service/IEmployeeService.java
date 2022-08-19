@@ -11,8 +11,6 @@ public interface IEmployeeService extends IService<Employee> {
 
     R<String> save(Employee employee, Long id);
 
-    R<String> update(Employee entity);
-
     R<Page<Employee>> getPage(int currentPage, int pageSize, String name);
 
 }
