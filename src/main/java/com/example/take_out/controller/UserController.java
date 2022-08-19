@@ -1,11 +1,10 @@
-package com.example.take_out.cotroller;
+package com.example.take_out.controller;
 
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.example.take_out.cotroller.utils.R;
+import com.example.take_out.controller.utils.R;
 import com.example.take_out.entity.User;
 import com.example.take_out.service.IUserService;
-import com.example.take_out.utils.BaseContext;
 import com.example.take_out.utils.ServletUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.logging.log4j.util.Strings;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.crypto.interfaces.PBEKey;
 import javax.servlet.http.HttpSession;
 import java.util.Map;
 import java.util.Objects;

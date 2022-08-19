@@ -1,6 +1,6 @@
 package com.example.take_out.service;
 
-import com.example.take_out.cotroller.utils.R;
+import com.example.take_out.controller.utils.R;
 import com.example.take_out.entity.ShoppingCart;
 import com.baomidou.mybatisplus.extension.service.IService;
 

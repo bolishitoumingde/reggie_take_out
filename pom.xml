@@ -79,15 +79,24 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-cache</artifactId>
         </dependency>
+        <!--
 
-        <!--主从读写分离-->
-        <!-- https://mvnrepository.com/artifact/org.apache.shardingsphere/sharding-jdbc-spring-boot-starter -->
+        &lt;!&ndash;主从读写分离&ndash;&gt;
+        &lt;!&ndash; https://mvnrepository.com/artifact/org.apache.shardingsphere/sharding-jdbc-spring-boot-starter &ndash;&gt;
         <dependency>
             <groupId>org.apache.shardingsphere</groupId>
             <artifactId>sharding-jdbc-spring-boot-starter</artifactId>
             <version>4.1.1</version>
         </dependency>
+        -->
 
+        <!--Swagger增强框架-->
+        <!-- https://mvnrepository.com/artifact/com.github.xiaoymin/knife4j-spring-boot-starter -->
+        <dependency>
+            <groupId>com.github.xiaoymin</groupId>
+            <artifactId>knife4j-spring-boot-starter</artifactId>
+            <version>3.0.3</version>
+        </dependency>
     </dependencies>
 
     <build>

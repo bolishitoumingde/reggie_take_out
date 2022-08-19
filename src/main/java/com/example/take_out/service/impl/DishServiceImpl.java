@@ -3,7 +3,7 @@ package com.example.take_out.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.example.take_out.cotroller.utils.R;
+import com.example.take_out.controller.utils.R;
 import com.example.take_out.entity.Dish;
 import com.example.take_out.dto.DishDto;
 import com.example.take_out.entity.DishFlavor;

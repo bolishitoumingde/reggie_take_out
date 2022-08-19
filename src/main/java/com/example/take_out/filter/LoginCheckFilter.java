@@ -1,7 +1,7 @@
 package com.example.take_out.filter;
 
 import com.alibaba.fastjson.JSON;
-import com.example.take_out.cotroller.utils.R;
+import com.example.take_out.controller.utils.R;
 import com.example.take_out.utils.ServletUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -42,7 +42,11 @@ public class LoginCheckFilter implements Filter {
                 "/user/logout",
                 "/user/sendMsg",
                 "/front/**",
-                "/common/**"
+                "/common/**",
+                "/doc.html",
+                "/webjars/**",
+                "/swagger-resources",
+                "/v2/api-docs"
         };
         //  B. 判断本次请求, 是否需要登录, 才可以访问
         boolean check = check(urls, requestURI);

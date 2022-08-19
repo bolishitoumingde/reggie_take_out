@@ -1,4 +1,4 @@
-package com.example.take_out.cotroller.utils;
+package com.example.take_out.controller.utils;
 
 import lombok.Data;
 

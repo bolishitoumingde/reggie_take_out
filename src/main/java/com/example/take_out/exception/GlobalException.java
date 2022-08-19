@@ -1,6 +1,6 @@
 package com.example.take_out.exception;
 
-import com.example.take_out.cotroller.utils.R;
+import com.example.take_out.controller.utils.R;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ControllerAdvice;

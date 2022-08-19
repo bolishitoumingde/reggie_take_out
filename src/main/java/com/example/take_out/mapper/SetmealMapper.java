@@ -2,7 +2,6 @@ package com.example.take_out.mapper;
 
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.example.take_out.cotroller.utils.R;
 import com.example.take_out.dto.SetmealDto;
 import com.example.take_out.entity.Setmeal;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;

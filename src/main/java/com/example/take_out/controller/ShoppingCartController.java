@@ -1,7 +1,7 @@
-package com.example.take_out.cotroller;
+package com.example.take_out.controller;
 
 
-import com.example.take_out.cotroller.utils.R;
+import com.example.take_out.controller.utils.R;
 import com.example.take_out.entity.ShoppingCart;
 import com.example.take_out.service.IShoppingCartService;
 import lombok.extern.slf4j.Slf4j;

@@ -1,7 +1,7 @@
-package com.example.take_out.cotroller;
+package com.example.take_out.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.example.take_out.cotroller.utils.R;
+import com.example.take_out.controller.utils.R;
 import com.example.take_out.entity.Dish;
 import com.example.take_out.dto.DishDto;
 import com.example.take_out.service.IDishService;

@@ -1,9 +1,9 @@
-package com.example.take_out.cotroller;
+package com.example.take_out.controller;
 
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.example.take_out.cotroller.utils.R;
+import com.example.take_out.controller.utils.R;
 import com.example.take_out.entity.Category;
 import com.example.take_out.service.ICategoryService;
 import lombok.extern.slf4j.Slf4j;
