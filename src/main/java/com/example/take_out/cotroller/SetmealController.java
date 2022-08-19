@@ -32,11 +32,23 @@ public class SetmealController {
         return setmealService.getPage(currentPage, pageSize, name);
     }
 
+    /**
+     * 添加套餐
+     *
+     * @param setmealDto 套餐类
+     * @return 成功
+     */
     @PostMapping
     public R<String> addSetmeal(@RequestBody SetmealDto setmealDto) {
         return setmealService.addSetmeal(setmealDto);
     }
 
+    /**
+     * 根据套餐id删除
+     *
+     * @param ids 套餐id
+     * @return 成功
+     */
     @DeleteMapping
     public R<String> delByIds(@RequestParam("ids") List<Long> ids) {
         return setmealService.removeBatchByIds(ids);
@@ -54,6 +66,13 @@ public class SetmealController {
         return setmealService.stop(status, ids);
     }
 
+    /**
+     * 获取套餐分类数据
+     *
+     * @param id     分类id
+     * @param status 状态
+     * @return 套餐数据
+     */
     @GetMapping("/list")
     public R<List<Setmeal>> list(@RequestParam("categoryId") Long id, int status) {
         LambdaQueryWrapper<Setmeal> lqw = new LambdaQueryWrapper<>();
