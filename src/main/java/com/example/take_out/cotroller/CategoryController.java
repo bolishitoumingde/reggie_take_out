@@ -76,6 +76,12 @@ public class CategoryController {
         return R.error("修改失败");
     }
 
+    /**
+     * 分类分页
+     *
+     * @param type 分类type
+     * @return 分类分页数据
+     */
     @GetMapping("/list")
     public R<List<Category>> listCategory(Integer type) {
         LambdaQueryWrapper<Category> lqw = new LambdaQueryWrapper<>();
