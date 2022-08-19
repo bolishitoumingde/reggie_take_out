@@ -40,6 +40,12 @@ public class OrdersServiceImpl extends ServiceImpl<OrdersMapper, Orders>
     @Autowired
     private IOrderDetailService orderDetailService;
 
+    /**
+     * 提交订单
+     *
+     * @param orders 订单部分数据
+     * @return 成功
+     */
     // TODO 订单明细
     @Override
     @Transactional
