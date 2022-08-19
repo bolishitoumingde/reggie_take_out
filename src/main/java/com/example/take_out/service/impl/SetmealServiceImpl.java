@@ -15,9 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -36,6 +33,14 @@ public class SetmealServiceImpl extends ServiceImpl<SetmealMapper, Setmeal>
     @Autowired
     private ISetmealDishService setmealDishService;
 
+    /**
+     * 套餐数据分页
+     *
+     * @param currentPage 当前页
+     * @param pageSize    页面大小
+     * @param name        查询条件，套餐名称
+     * @return 套餐分页数据
+     */
     @Override
     public R<Page<SetmealDto>> getPage(int currentPage, int pageSize, String name) {
         Page<SetmealDto> page = new Page<>(currentPage, pageSize);
@@ -46,9 +51,18 @@ public class SetmealServiceImpl extends ServiceImpl<SetmealMapper, Setmeal>
         return R.success(page);
     }
 
+    /**
+     * 新建套餐
+     *
+     * @param setmealDto 套餐信息
+     * @return 成功
+     */
     @Override
     @Transactional
     public R<String> addSetmeal(SetmealDto setmealDto) {
+        /*
+         * 保存到数据库
+         */
         this.save(setmealDto);
         List<SetmealDish> setmealDishes = setmealDto.getSetmealDishes();
         setmealDishes = setmealDishes.stream().map((item) -> {
@@ -60,6 +74,12 @@ public class SetmealServiceImpl extends ServiceImpl<SetmealMapper, Setmeal>
     }
 
 
+    /**
+     * 删除套餐，删除redis相关数据
+     *
+     * @param ids 套餐id
+     * @return 成功
+     */
     public R<String> removeBatchByIds(List<Long> ids) {
         LambdaQueryWrapper<Setmeal> lqw = new LambdaQueryWrapper<>();
         lqw.in(Setmeal::getId, ids);
@@ -75,6 +95,13 @@ public class SetmealServiceImpl extends ServiceImpl<SetmealMapper, Setmeal>
         return R.success("删除成功");
     }
 
+    /**
+     * 停售起售
+     *
+     * @param status 状态
+     * @param ids    需要操作的ids
+     * @return 成功
+     */
     @Override
     public R<String> stop(int status, List<Long> ids) {
         LambdaQueryWrapper<Setmeal> lqw = new LambdaQueryWrapper<>();
