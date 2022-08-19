@@ -11,6 +11,7 @@ import com.example.take_out.service.ISetmealDishService;
 import com.example.take_out.service.ISetmealService;
 import com.example.take_out.mapper.SetmealMapper;
 import org.apache.logging.log4j.util.Strings;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -38,14 +39,14 @@ public class SetmealServiceImpl extends ServiceImpl<SetmealMapper, Setmeal>
      *
      * @param currentPage 当前页
      * @param pageSize    页面大小
-     * @param name        查询条件，套餐名称
+     * @param searchName  查询条件，套餐名称
      * @return 套餐分页数据
      */
     @Override
-    public R<Page<SetmealDto>> getPage(int currentPage, int pageSize, String name) {
+    public R<Page<SetmealDto>> getPage(int currentPage, int pageSize, String searchName) {
         Page<SetmealDto> page = new Page<>(currentPage, pageSize);
         LambdaQueryWrapper<SetmealDto> lqw = new LambdaQueryWrapper<>();
-        lqw.like(Strings.isNotEmpty(name), Setmeal::getName, name);
+        lqw.apply(searchName != null, "setmeal.name like '%" + searchName + "%'");
         lqw.apply("setmeal.category_id = category.id");
         setmealMapper.getPage(page, lqw);
         return R.success(page);
@@ -110,6 +111,25 @@ public class SetmealServiceImpl extends ServiceImpl<SetmealMapper, Setmeal>
         setmeal.setStatus(status);
         this.update(setmeal, lqw);
         return R.success("成功");
+    }
+
+    /**
+     * 查询套餐信息
+     *
+     * @param id 套餐id
+     * @return 套餐信息
+     */
+    @Override
+    public R<SetmealDto> getById(Long id) {
+        // 查询套餐信息
+        Setmeal setmeal = setmealMapper.selectById(id);
+        SetmealDto setmealDto = new SetmealDto();
+        BeanUtils.copyProperties(setmeal, setmealDto);
+        LambdaQueryWrapper<SetmealDish> lqw = new LambdaQueryWrapper<>();
+        lqw.eq(SetmealDish::getSetmealId, id);
+        List<SetmealDish> dishList = setmealDishService.list(lqw);
+        setmealDto.setSetmealDishes(dishList);
+        return R.success(setmealDto);
     }
 
 

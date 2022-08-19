@@ -6,6 +6,7 @@ import com.example.take_out.cotroller.utils.R;
 import com.example.take_out.entity.User;
 import com.example.take_out.service.IUserService;
 import com.example.take_out.utils.BaseContext;
+import com.example.take_out.utils.ServletUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,7 +66,7 @@ public class UserController {
                 user.setPhone(phone);
                 userService.save(user);
             }
-            BaseContext.setId(user.getId());
+            ServletUtil.getSession().setAttribute("user", user.getId());
             session.setAttribute("user", user.getId());
             return R.success(user);
         }
@@ -78,8 +79,7 @@ public class UserController {
             user.setPhone(phone);
             userService.save(user);
         }
-        BaseContext.setId(user.getId());
-        session.setAttribute("user", user.getId());
+        ServletUtil.getSession().setAttribute("user", user.getId());
         return R.success(user);
         // return R.error("登录失败");
     }

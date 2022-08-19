@@ -2,7 +2,7 @@ package com.example.take_out.filter;
 
 import com.alibaba.fastjson.JSON;
 import com.example.take_out.cotroller.utils.R;
-import com.example.take_out.utils.BaseContext;
+import com.example.take_out.utils.ServletUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.util.AntPathMatcher;
@@ -52,18 +52,28 @@ public class LoginCheckFilter implements Filter {
             filterChain.doFilter(request, response);
             return;
         }
+        /* if (check(new String[]{"/employee/login",
+                "/employee/logout"}, requestURI)) {
+
+        } */
         //  D. 判断登录状态，如果已登录，则直接放行
         Long empId = (Long) request.getSession().getAttribute("employee");
+        System.out.println("empId = " + empId);
         if (empId != null) {
             log.info("用户已登录，用户id为：{}", empId);
-            BaseContext.setId(empId);
+            ServletUtil.getSession().setAttribute("employee", empId);
             filterChain.doFilter(request, response);
             return;
         }
+        /* if (check(new String[]{"/user/login",
+                "/user/logout",
+                "/user/sendMsg"}, requestURI)) {
+        } */
         Long userId = (Long) request.getSession().getAttribute("user");
+        System.out.println("userId = " + userId);
         if (userId != null) {
             log.info("用户已登录，用户id为：{}", userId);
-            BaseContext.setId(userId);
+            ServletUtil.getSession().setAttribute("user", userId);
             filterChain.doFilter(request, response);
             return;
         }
@@ -75,8 +85,6 @@ public class LoginCheckFilter implements Filter {
         /*
           路径匹配
           @Description: 路径匹配，检查本次请求是否需要放行
-         * @author LiBiGo
-         * @date 2022/8/12 16:50
          */
         for (String url : urls) {
             boolean match = PATH_MATCHER.match(url, requestURI); // 使用通配符对象，配对资源

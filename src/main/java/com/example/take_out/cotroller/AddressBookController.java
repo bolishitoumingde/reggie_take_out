@@ -81,7 +81,7 @@ public class AddressBookController {
      */
     @GetMapping("/list")
     public R<List<AddressBook>> list(AddressBook addressBook) {
-        addressBook.setUserId(BaseContext.getId());
+        addressBook.setUserId((Long) ServletUtil.getSession().getAttribute("user"));
         LambdaQueryWrapper<AddressBook> lqw = new LambdaQueryWrapper<>();
         if (addressBook.getUserId() == null) {
             return R.error("未查询到用户名");

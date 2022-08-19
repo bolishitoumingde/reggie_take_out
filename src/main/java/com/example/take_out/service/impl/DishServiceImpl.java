@@ -11,7 +11,6 @@ import com.example.take_out.service.IDishFlavorService;
 import com.example.take_out.service.IDishService;
 import com.example.take_out.mapper.DishMapper;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -89,15 +88,15 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements ID
      *
      * @param currentPage 当前页
      * @param pageSize    页面大小
-     * @param name        查询条件，菜品名称
+     * @param searchName  查询条件，菜品名称
      * @return 菜品分页数据
      */
     @Override
-    public R<Page<DishDto>> getPage(int currentPage, int pageSize, String name) {
+    public R<Page<DishDto>> getPage(int currentPage, int pageSize, String searchName) {
         Page<DishDto> page = new Page<>(currentPage, pageSize);
         LambdaQueryWrapper<DishDto> lqw = new LambdaQueryWrapper<>();
-        lqw.like(Strings.isNotEmpty(name), Dish::getName, name);
         lqw.orderByDesc(Dish::getSort);
+        lqw.apply(searchName != null, "dish.name like '%" + searchName + "%'");
         lqw.apply("dish.category_id = category.id");
         dishMapper.getPage(page, lqw);
         return R.success(page);
@@ -134,7 +133,7 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements ID
     @Override
     public R<String> updateDish(DishDto dishDto) {
         // 更新dish表
-        this.updateDish(dishDto);
+        this.updateById(dishDto);
         // 获取菜品id
         Long dishDtoId = dishDto.getId();
         // 清理当前菜品的口味信息

@@ -8,6 +8,7 @@ import com.example.take_out.entity.AddressBook;
 import com.example.take_out.service.IAddressBookService;
 import com.example.take_out.mapper.AddressBookMapper;
 import com.example.take_out.utils.BaseContext;
+import com.example.take_out.utils.ServletUtil;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,7 +31,7 @@ public class AddressBookServiceImpl extends ServiceImpl<AddressBookMapper, Addre
     @Transactional
     public R<String> setDefault(AddressBook addressBook) {
         LambdaUpdateWrapper<AddressBook> lqw = new LambdaUpdateWrapper<>();
-        lqw.eq(AddressBook::getUserId, BaseContext.getId());
+        lqw.eq(AddressBook::getUserId, ServletUtil.getSession().getAttribute("user"));
         lqw.set(AddressBook::getIsDefault, 0);
         this.update(lqw);
 
@@ -47,7 +48,7 @@ public class AddressBookServiceImpl extends ServiceImpl<AddressBookMapper, Addre
     @Override
     public R<Object> getDefault() {
         LambdaQueryWrapper<AddressBook> lqw = new LambdaQueryWrapper<>();
-        lqw.eq(AddressBook::getUserId, BaseContext.getId());
+        lqw.eq(AddressBook::getUserId, ServletUtil.getSession().getAttribute("user"));
         lqw.eq(AddressBook::getIsDefault, 1);
         AddressBook addressBook = this.getOne(lqw);
         if (addressBook != null) {

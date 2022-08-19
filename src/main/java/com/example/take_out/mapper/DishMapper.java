@@ -25,8 +25,8 @@ public interface DishMapper extends BaseMapper<Dish> {
      * @param lqw  查询条件
      * @return 页面对象
      */
-    @Select("SELECT dish.*, category.name as categoryName FROM dish,category ${lqw.customSqlSegment}")
-    Page<DishDto> getPage(Page<DishDto> page, @Param("lqw") Wrapper lqw);
+    @Select("SELECT dish.*, category.name as categoryName FROM dish,category ${ew.customSqlSegment}")
+    Page<DishDto> getPage(Page<DishDto> page, @Param("ew") Wrapper lqw);
 }
 
 

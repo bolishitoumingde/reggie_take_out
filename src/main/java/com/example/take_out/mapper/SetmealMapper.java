@@ -19,8 +19,8 @@ import org.apache.ibatis.annotations.Select;
 @Mapper
 public interface SetmealMapper extends BaseMapper<Setmeal> {
 
-    @Select("SELECT setmeal.*, category.name as categoryName FROM setmeal,category ${lqw.customSqlSegment}")
-    Page<SetmealDto> getPage(@Param("page") Page<SetmealDto> page, @Param("lqw") Wrapper lqw);
+    @Select("SELECT setmeal.*, category.name as categoryName FROM setmeal,category ${ew.customSqlSegment}")
+    Page<SetmealDto> getPage(@Param("page") Page<SetmealDto> page, @Param("ew") Wrapper lqw);
 
 }
 

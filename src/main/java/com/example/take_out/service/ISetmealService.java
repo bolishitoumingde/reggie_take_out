@@ -23,4 +23,6 @@ public interface ISetmealService extends IService<Setmeal> {
 
     R<String> stop(int status, List<Long> ids);
 
+    R<SetmealDto> getById(Long id);
+
 }

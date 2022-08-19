@@ -89,5 +89,15 @@ public class DishController {
         return dishService.stop(status, ids);
     }
 
-
+    /**
+     * 根据id删除菜品
+     *
+     * @param ids 菜品id集合
+     * @return 成功
+     */
+    @DeleteMapping
+    public R<String> delById(@RequestParam("ids") List<Long> ids) {
+        dishService.removeBatchByIds(ids);
+        return R.success("删除成功");
+    }
 }

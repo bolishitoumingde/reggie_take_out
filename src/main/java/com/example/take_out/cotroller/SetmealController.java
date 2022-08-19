@@ -10,6 +10,8 @@ import com.example.take_out.service.ISetmealDishService;
 import com.example.take_out.service.ISetmealService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -50,6 +52,7 @@ public class SetmealController {
      * @return 成功
      */
     @DeleteMapping
+    @CacheEvict(value = "setmealCache")
     public R<String> delByIds(@RequestParam("ids") List<Long> ids) {
         return setmealService.removeBatchByIds(ids);
     }
@@ -69,16 +72,27 @@ public class SetmealController {
     /**
      * 获取套餐分类数据
      *
-     * @param id     分类id
-     * @param status 状态
+     * @param setmeal 套餐信息
      * @return 套餐数据
      */
     @GetMapping("/list")
-    public R<List<Setmeal>> list(@RequestParam("categoryId") Long id, int status) {
+    @Cacheable(value = "setmealCache", key = "#setmeal.categoryId + '_' + #setmeal.status")
+    public R<List<Setmeal>> list(Setmeal setmeal) {
         LambdaQueryWrapper<Setmeal> lqw = new LambdaQueryWrapper<>();
-        lqw.eq(Setmeal::getCategoryId, id).eq(Setmeal::getStatus, status);
+        lqw.eq(Setmeal::getCategoryId, setmeal.getCategoryId()).eq(Setmeal::getStatus, setmeal.getStatus());
         List<Setmeal> setmealList = setmealService.list(lqw);
         return R.success(setmealList);
+    }
+
+    /**
+     * 根据id查询套餐信心
+     *
+     * @param id 套餐id
+     * @return 套餐数据
+     */
+    @GetMapping("/{id}")
+    public R<SetmealDto> getById(@PathVariable Long id) {
+        return setmealService.getById(id);
     }
 
 
