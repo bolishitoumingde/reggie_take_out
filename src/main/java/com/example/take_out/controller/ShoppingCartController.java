@@ -4,7 +4,6 @@ package com.example.take_out.controller;
 import com.example.take_out.controller.utils.R;
 import com.example.take_out.entity.ShoppingCart;
 import com.example.take_out.service.IShoppingCartService;
-import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -14,7 +13,6 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequestMapping("/shoppingCart")
-@Api("购物车接口")
 public class ShoppingCartController {
 
     @Autowired

@@ -1,7 +1,6 @@
 package com.example.take_out.controller;
 
 import com.example.take_out.controller.utils.R;
-import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +18,6 @@ import java.util.UUID;
 @Slf4j
 @RestController
 @RequestMapping("/common")
-@Api("文件上传下载接口")
 public class CommonController {
 
     @Value("${upload.path}")

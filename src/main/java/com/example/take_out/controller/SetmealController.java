@@ -8,7 +8,6 @@ import com.example.take_out.dto.SetmealDto;
 import com.example.take_out.entity.Setmeal;
 import com.example.take_out.service.ISetmealDishService;
 import com.example.take_out.service.ISetmealService;
-import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
@@ -20,7 +19,6 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequestMapping("/setmeal")
-@Api("套餐接口")
 public class SetmealController {
     @Autowired
     private ISetmealService setmealService;

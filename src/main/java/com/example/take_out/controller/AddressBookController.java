@@ -6,7 +6,6 @@ import com.example.take_out.controller.utils.R;
 import com.example.take_out.entity.AddressBook;
 import com.example.take_out.service.IAddressBookService;
 import com.example.take_out.utils.ServletUtil;
-import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -15,7 +14,6 @@ import java.util.List;
 
 @Slf4j
 @RestController
-@Api("地址簿接口")
 @RequestMapping("/addressBook")
 public class AddressBookController {
 
